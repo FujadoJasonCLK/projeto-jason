@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Master Admin - Fuja do Jason</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; padding: 20px; }
+        .tab-btn { background: #222; color: #fff; border: 1px solid #444; padding: 10px; cursor: pointer; transition: 0.3s; }
+        .active { background: #cc0000; border-color: #ff0000; }
+        .section { display: none; background: #151515; padding: 20px; border-radius: 8px; margin-top: 10px; border: 1px solid #333; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #222; border: 1px solid #333; color: #fff; box-sizing: border-box; }
+        button.save { background: #cc0000; color: #fff; width: 100%; padding: 15px; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px dotted #333; align-items: center; }
+        .actions { display: flex; gap: 5px; }
+        .btn-action { border: none; padding: 5px 10px; cursor: pointer; color: white; font-size: 12px; border-radius: 3px; }
+        .btn-del { background: #444; } .btn-del:hover { background: #ff0000; }
+        .btn-edit { background: #0055aa; }
+        .busca-admin { background: #1a1a1a; border: 1px solid #cc0000; border-radius: 4px; padding: 8px; color: white; margin-bottom: 10px; }
+        #editor-container { background: #222; color: #fff; height: 250px; margin-bottom: 10px; border: 1px solid #333; }
+        .ql-toolbar { background: #ddd !important; border-radius: 4px 4px 0 0; }
+        .ql-container { border-radius: 0 0 4px 4px; font-size: 16px; }
+        .ql-editor.ql-blank::before { color: #888 !important; }
+        .poll-box { border: 1px solid #333; border-radius: 8px; padding: 12px; margin-top: 10px; background: #101010; }
+        .poll-row { display:flex; gap: 10px; align-items:center; }
+        .poll-row > * { flex: 1; }
+        .poll-actions { display:flex; gap: 8px; }
+        .btn-mini { border: 1px solid #444; background:#222; color:#fff; padding: 8px 10px; border-radius: 6px; cursor:pointer; }
+        .btn-mini:hover { border-color:#ff0000; }
+    </style>
+</head>
+<body>
+
+    <div id="login" style="text-align: center; margin-top: 100px;">
+        <h2>PAINEL ADMINISTRATIVO</h2>
+        <input type="password" id="pass" style="max-width: 300px; text-align: center;" placeholder="Senha...">
+        <button onclick="checkPass()" class="save">ACESSAR SISTEMA</button>
+    </div>
+
+    <div id="master" style="display:none;">
+        <h1>CONTROLE DO PROJETO</h1>
+        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+            <button id="btn-news" class="tab-btn" onclick="openTab('news')">NOTÍCIAS</button>
+            <button id="btn-rank" class="tab-btn" onclick="openTab('rank')">RANKING</button>
+            <button id="btn-galeria" class="tab-btn" onclick="openTab('galeria')">OS JASONS</button>
+            <button id="btn-team" class="tab-btn" onclick="openTab('team')">EQUIPE</button>
+            <button id="btn-vip" class="tab-btn" onclick="openTab('vip')">LOJA VIP</button>
+            <button id="btn-config" class="tab-btn" onclick="openTab('config')">⚙️ CONFIG</button>
+        </div>
+
+        <div id="news" class="section">
+            <input type="hidden" id="n-id">
+            <input type="text" id="n-titulo" placeholder="Título da Notícia">
+            <div id="editor-container"></div>
+
+            <div class="poll-box">
+                <label style="display:flex; gap:10px; align-items:center; margin:0;">
+                    <input id="poll-enabled" type="checkbox" style="width:auto; margin:0;">
+                    <span style="font-weight:bold;">Adicionar enquete (estilo hubbe)</span>
+                </label>
+                <div id="poll-fields" style="display:none; margin-top: 10px;">
+                    <input type="text" id="poll-pergunta" placeholder="Pergunta da enquete (ex: Qual sua escolha?)">
+                    <div class="poll-row">
+                        <input type="datetime-local" id="poll-expira">
+                        <div class="poll-actions">
+                            <button class="btn-mini" type="button" onclick="pollAddOption()">+ opção</button>
+                            <button class="btn-mini" type="button" onclick="pollClearOptions()">limpar</button>
+                        </div>
+                    </div>
+                    <div id="poll-opcoes"></div>
+                    <div style="color:#aaa; font-size:12px; margin-top:8px;">
+                        Dica: mínimo 2 opções. Se não preencher expiração, fica aberta.
+                    </div>
+                </div>
+            </div>
+
+            <button class="save" onclick="saveData('noticias', 'n')">PUBLICAR NOTÍCIA</button>
+            <div id="list-noticias"></div>
+        </div>
+        
+        <div id="galeria" class="section">
+            <input type="hidden" id="j-id">
+            <input type="text" id="j-nick" placeholder="Nick">
+            <input type="text" id="j-desc" placeholder="Descrição">
+            <button class="save" onclick="saveData('galeria', 'j')">SALVAR</button>
+            <hr style="border:0; border-top:1px solid #333; margin: 20px 0;">
+            <input type="text" id="buscaJasonAdmin" class="busca-admin" placeholder="Pesquisar nick na lista..." onkeyup="filtrarGaleriaAdmin()">
+            <div id="list-galeria"></div>
+        </div>
+
+        <div id="rank" class="section"><input type="hidden" id="r-id"><input type="text" id="r-nick" placeholder="Nick"><input type="number" id="r-pontos" placeholder="Pontos"><select id="r-tipo"><option value="jason">Jason</option><option value="vitima">Vítima</option></select><button class="save" onclick="saveData('ranking', 'r')">SALVAR</button><div id="list-ranking"></div></div>
+        <div id="team" class="section"><input type="hidden" id="e-id"><input type="text" id="e-nick" placeholder="Nick"><input type="text" id="e-cargo" placeholder="Cargo"><button class="save" onclick="saveData('equipe', 'e')">SALVAR</button><div id="list-equipe"></div></div>
+        <div id="vip" class="section"><input type="hidden" id="v-id"><input type="text" id="v-titulo" placeholder="Produto"><input type="text" id="v-preco" placeholder="Preço"><textarea id="v-desc" placeholder="Descrição..."></textarea><button class="save" onclick="saveData('vip', 'v')">SALVAR</button><div id="list-vip"></div></div>
+
+        <div id="config" class="section">
+            <h3>Configuração Geral</h3>
+            <p>Link dinâmico do Discord (afeta o botão do site):</p>
+            <input type="text" id="conf-discord" placeholder="Ex: https://discord.gg/convite">
+            <button class="save" onclick="salvarConfig()">ATUALIZAR DISCORD</button>
+        </div>
+    </div>
+
+    <script>
+        const API = "https://ideal-rosanne-fujadojasonclk1-ab7b487e.koyeb.app/api";
+        const MASTER_PASS = "123fujadojasonclkadmin";
+        let quill;
+
+        window.onload = () => {
+            quill = new Quill('#editor-container', {
+                theme: 'snow',
+                placeholder: 'Escreva o conteúdo aqui...',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link', 'clean']
+                    ]
+                }
+            });
+
+            const pollEnabled = document.getElementById('poll-enabled');
+            pollEnabled.addEventListener('change', () => {
+                document.getElementById('poll-fields').style.display = pollEnabled.checked ? 'block' : 'none';
+            });
+
+            // inicia com 2 opções por padrão
+            pollClearOptions();
+            pollAddOption();
+            pollAddOption();
+        };
+
+        function pollAddOption(value = "") {
+            const wrap = document.getElementById('poll-opcoes');
+            const row = document.createElement('div');
+            row.className = 'poll-row';
+            row.style.marginTop = '8px';
+            row.innerHTML = `
+                <input type="text" class="poll-opt" placeholder="Opção (ex: Azul)" value="${String(value).replace(/"/g, '&quot;')}">
+                <button class="btn-mini" type="button" style="flex:0 0 auto;" onclick="this.parentElement.remove()">remover</button>
+            `;
+            wrap.appendChild(row);
+        }
+
+        function pollClearOptions() {
+            document.getElementById('poll-opcoes').innerHTML = "";
+        }
+
+        function checkPass() {
+            if(document.getElementById('pass').value === MASTER_PASS) {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('master').style.display = 'block';
+                openTab('news');
+            } else { alert("Senha incorreta!"); }
+        }
+
+        function openTab(id) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).style.display = 'block';
+            document.getElementById('btn-' + id).classList.add('active');
+            if(id === 'config') carregarConfig(); else refreshAll();
+        }
+
+        async function carregarConfig() {
+            const res = await fetch(`${API}/config/discord_link`);
+            const data = await res.json();
+            if(data.valor) document.getElementById('conf-discord').value = data.valor;
+        }
+
+        async function salvarConfig() {
+            const val = document.getElementById('conf-discord').value;
+            await fetch(`${API}/config`, {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ chave: 'discord_link', valor: val })
+            });
+            alert("Link do Discord atualizado!");
+        }
+
+        function filtrarGaleriaAdmin() {
+            const termo = document.getElementById('buscaJasonAdmin').value.toLowerCase();
+            const itens = document.querySelectorAll('#list-galeria .item');
+            itens.forEach(item => {
+                const nick = item.querySelector('span').innerText.toLowerCase();
+                item.style.display = nick.includes(termo) ? "flex" : "none";
+            });
+        }
+
+        function clearForm(prefix) {
+            document.getElementById(prefix + '-id').value = "";
+            const inputs = document.querySelectorAll(`#${prefix} input, #${prefix} textarea, #${prefix} select`);
+            inputs.forEach(i => { if(i.type !== 'hidden') i.value = ""; });
+            if(prefix === 'n' && quill) {
+                quill.setContents([]);
+                document.getElementById('poll-enabled').checked = false;
+                document.getElementById('poll-fields').style.display = 'none';
+                document.getElementById('poll-pergunta').value = "";
+                document.getElementById('poll-expira').value = "";
+                pollClearOptions();
+                pollAddOption();
+                pollAddOption();
+            }
+        }
+
+        async function saveData(rota, prefix) {
+            const id = document.getElementById(prefix + '-id').value;
+            let body = {};
+            if(prefix === 'n') {
+                const pollEnabled = document.getElementById('poll-enabled').checked;
+                let enquete = undefined;
+                if (pollEnabled) {
+                    const pergunta = document.getElementById('poll-pergunta').value.trim();
+                    const expiraRaw = document.getElementById('poll-expira').value;
+                    const opcoes = Array.from(document.querySelectorAll('.poll-opt'))
+                        .map(i => i.value.trim())
+                        .filter(Boolean)
+                        .map(texto => ({ texto, votos: 0 }));
+
+                    if (pergunta && opcoes.length >= 2) {
+                        enquete = {
+                            pergunta,
+                            expiraEm: expiraRaw ? new Date(expiraRaw).toISOString() : null,
+                            opcoes,
+                            votosTotais: 0
+                        };
+                    }
+                }
+
+                const tituloRaw = document.getElementById('n-titulo').value;
+                const tituloFinal = (tituloRaw && tituloRaw.trim()) ? tituloRaw : (enquete?.pergunta || "");
+
+                body = {
+                    titulo: tituloFinal,
+                    conteudo: quill ? quill.root.innerHTML : "",
+                    enquete: enquete
+                };
+            }
+            if(prefix === 'j') body = { nick: document.getElementById('j-nick').value, descricao: document.getElementById('j-desc').value };
+            if(prefix === 'r') body = { nick: document.getElementById('r-nick').value, pontos: document.getElementById('r-pontos').value, tipo: document.getElementById('r-tipo').value };
+            if(prefix === 'e') body = { nick: document.getElementById('e-nick').value, cargo: document.getElementById('e-cargo').value };
+            if(prefix === 'v') body = { titulo: document.getElementById('v-titulo').value, valor: document.getElementById('v-preco').value, descricao: document.getElementById('v-desc').value };
+
+            const url = id ? `${API}/${rota}/${id}` : `${API}/${rota}`;
+            const method = id ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(body)
+                });
+                if(res.ok) { clearForm(prefix); refreshAll(); alert("Salvo!"); }
+            } catch (e) { console.error(e); }
+        }
+
+        async function refreshAll() {
+            const listMap = { noticias: 'list-noticias', galeria: 'list-galeria', ranking: 'list-ranking', equipe: 'list-equipe', vip: 'list-vip' };
+            for (let [rota, id] of Object.entries(listMap)) {
+                try {
+                    const res = await fetch(`${API}/${rota}`);
+                    const data = await res.json();
+                    if(rota === 'galeria') data.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+                    document.getElementById(id).innerHTML = data.map(x => `
+                        <div class="item">
+                            <span>${x.nick || x.titulo}</span>
+                            <div class="actions">
+                                <button class="btn-action btn-edit" onclick='startEdit("${rota}", ${JSON.stringify(x).replace(/'/g, "&apos;")})'>✏️</button>
+                                <button class="btn-action btn-del" onclick="del('${x._id}','${rota}')">🗑️</button>
+                            </div>
+                        </div>`).join('');
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        function startEdit(rota, obj) {
+            const p = rota === 'noticias' ? 'n' : (rota === 'galeria' ? 'j' : (rota === 'ranking' ? 'r' : (rota === 'equipe' ? 'e' : 'v')));
+            document.getElementById(p + '-id').value = obj._id;
+            if(p === 'n') {
+                document.getElementById('n-titulo').value = obj.titulo;
+                if (quill) quill.root.innerHTML = obj.conteudo || "";
+
+                const hasPoll = obj.enquete && obj.enquete.pergunta && Array.isArray(obj.enquete.opcoes) && obj.enquete.opcoes.length >= 2;
+                document.getElementById('poll-enabled').checked = !!hasPoll;
+                document.getElementById('poll-fields').style.display = hasPoll ? 'block' : 'none';
+                document.getElementById('poll-pergunta').value = hasPoll ? (obj.enquete.pergunta || "") : "";
+                document.getElementById('poll-expira').value = hasPoll && obj.enquete.expiraEm ? new Date(obj.enquete.expiraEm).toISOString().slice(0,16) : "";
+                pollClearOptions();
+                if (hasPoll) {
+                    obj.enquete.opcoes.forEach(o => pollAddOption(o.texto || ""));
+                } else {
+                    pollAddOption();
+                    pollAddOption();
+                }
+            }
+            if(p === 'j') { document.getElementById('j-nick').value = obj.nick; document.getElementById('j-desc').value = obj.descricao; }
+            if(p === 'r') { document.getElementById('r-nick').value = obj.nick; document.getElementById('r-pontos').value = obj.pontos; document.getElementById('r-tipo').value = obj.tipo; }
+            if(p === 'e') { document.getElementById('e-nick').value = obj.nick; document.getElementById('e-cargo').value = obj.cargo; }
+            if(p === 'v') { document.getElementById('v-titulo').value = obj.titulo; document.getElementById('v-preco').value = obj.valor; document.getElementById('v-desc').value = obj.descricao || ""; }
+            window.scrollTo(0,0);
+        }
+
+        async function del(id, rota) {
+            if(confirm("Apagar?")) {
+                const res = await fetch(`${API}/${rota}/${id}`, { method: 'DELETE' });
+                if(res.ok) refreshAll();
+            }
+        }
+    </script>
+</body>
+</html>

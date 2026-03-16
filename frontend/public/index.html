@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="google-site-verification" content="utzqRSVoYz8aCElz_eZ0VvpSmEb27nOZdqh1_-_ypCg" />
+
+    <title>Fuja do Jason CLK - Site Oficial Habblet</title>
+    <meta name="description" content="Site oficial do Fuja do Jason CLK no Habblet. Confira o ranking, os Jasons lendários, nossa equipe e pacotes VIP. Sobreviva se puder!">
+    <meta name="keywords" content="Fuja do Jason, Fuja do Jason CLK, Habblet, Jogo Habblet, Sobrevivência, Ranking Fuja do Jason, Jason Habblet">
+    <meta name="author" content="Creitinmaluco">
+    <link rel="canonical" href="https://fujadojason.web.app/">
+
+    <meta property="og:title" content="Fuja do Jason CLK - Site Oficial">
+    <meta property="og:description" content="Confira o ranking oficial e as novidades do Fuja do Jason CLK no Habblet.">
+    <meta property="og:image" content="banner.png">
+    <meta property="og:url" content="https://fujadojason.web.app/">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #050505; color: #e0e0e0; margin: 0; padding: 0; text-align: center; }
+        header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('banner.png');
+            background-size: cover; background-position: center; padding: 100px 20px; border-bottom: 4px solid #cc0000; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        h1 { margin: 0; color: #ff0000; text-shadow: 4px 4px 0px #000, 0 0 20px #ff0000; font-size: 4em; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+        .subtitulo { color: #fff; font-size: 1.2em; margin-top: 10px; font-weight: bold; background-color: rgba(0,0,0,0.6); display: inline-block; padding: 5px 15px; border-radius: 20px; }
+        nav { background: #0f0f0f; padding: 15px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #222; }
+        .tab-btn { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 12px 25px; cursor: pointer; font-weight: bold; transition: 0.3s; text-transform: uppercase; font-size: 14px; text-decoration: none; border-radius: 4px; }
+        .tab-btn:hover, .tab-btn.active { background: #cc0000; border-color: #ff0000; transform: translateY(-2px); }
+        .btn-quarto { background: #2e7d32; border-color: #4caf50; }
+        .btn-entrar { background: #5865F2; border-color: #454FBF; }
+        .aba-conteudo { display: none; max-width: 1100px; margin: 30px auto; padding: 20px; background: #111; border: 1px solid #222; border-radius: 8px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* card notícia estilo social */
+        .card-noticia { background: #fff; color: #333; border: 1px solid #ccc; padding: 20px; border-radius: 4px; margin-bottom: 10px; text-align: left; }
+        .noticia-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .avatar-cabeca { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f3f3f3; border-radius: 4px; border: 1px solid #eee; position: relative; }
+        .avatar-cabeca img { width: auto; height: auto; margin-top: 25px; image-rendering: pixelated; }
+        .noticia-meta { display: flex; align-items: baseline; gap: 6px; }
+        .noticia-meta strong { color: #333; font-weight: bold; font-size: 15px; }
+        .noticia-meta span { color: #999; font-size: 13px; }
+
+        /* enquete */
+        .enquete-box { background: #fdfdfd; border: 1px solid #eee; padding: 15px; border-radius: 4px; margin-top: 15px; }
+        .enquete-titulo { font-size: 11px; font-weight: bold; color: #999; text-transform: uppercase; display: block; margin-bottom: 8px; }
+        .enquete-pergunta { font-size: 14px; font-weight: 700; margin: 0 0 10px 0; color: #333; }
+        .enquete-opcao { display:flex; align-items:center; justify-content:space-between; gap:10px; border: 1px solid #ddd; background:#fff; padding: 10px 12px; border-radius: 4px; cursor:pointer; margin: 8px 0; }
+        .enquete-opcao:hover { border-color:#87bc4c; }
+        .enquete-opcao[disabled] { opacity: .7; cursor:not-allowed; }
+        .enquete-opcao b { font-weight: 600; }
+        .barra-bg { background: #eee; height: 14px; border-radius: 3px; overflow: hidden; margin: 4px 0 12px 0; position: relative; }
+        .barra-fill { background: #87bc4c; height: 100%; transition: 0.5s; }
+        .barra-votos { position: absolute; right: 5px; top: 0; font-size: 10px; line-height: 14px; color: #333; font-weight: bold; }
+        .enquete-msg { font-size: 12px; color: #777; margin-top: 8px; }
+
+        .separador-noticia { width: 100%; margin: 20px auto 30px auto; border-bottom: 2px solid #333; }
+        .grid-players { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .player-card { background: #1a1a1a; border: 1px solid #333; padding: 15px; border-radius: 8px; width: 130px; text-align: center; transition: 0.2s; position: relative; }
+        .player-card img { margin-top: -10px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+        .player-card strong { display: block; color: #fff; margin-top: 5px; font-size: 0.9em; }
+        .caixa-legenda { background: #222; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 0.75em; display: inline-block; margin-top: 5px; border: 1px solid #333; min-width: 80px; }
+        .vip-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .vip-card-produto { background: #1a1500; border: 2px solid #333; padding: 20px; width: 250px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .vip-card-produto.selected { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
+        
+        /* AJUSTE DOS BRASÕES: TAMANHO ORIGINAL E NITIDEZ */
+        .vip-card-produto h3 { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            font-size: 1.2em;
+        }
+        .brasao-vip { 
+            width: auto; /* Deixa a imagem no tamanho original */
+            height: auto; 
+            image-rendering: pixelated; /* Mantém a nitidez do pixel art */
+            image-rendering: crisp-edges;
+            max-width: 50px; /* Limite apenas para segurança */
+        }
+        .vip-card-produto p { font-size: 0.9em; line-height: 1.4; color: #ccc; margin-top: 10px; }
+        
+        .vip-ouro { border-color: #ffd700 !important; }
+        .vip-prata { border-color: #c0c0c0 !important; }
+        .vip-bronze { border-color: #cd7f32 !important; }
+        .vip-rubi { border-color: #e0115f !important; }
+        .vip-price { font-size: 1.5em; font-weight: bold; color: #fff; display: block; margin: 15px 0; }
+        .ranking-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .coluna-rank { flex: 1; min-width: 300px; background: #0f0f0f; padding: 10px; border-radius: 10px; border: 1px solid #222; }
+        .titulo-jason { color: #ff0000; border-bottom: 2px solid #ff0000; padding-bottom: 10px; margin-bottom: 15px; text-transform: uppercase; }
+        .titulo-vitima { color: #3f4f3c; border-bottom: 2px solid #3f4f3c; padding-bottom: 10px; margin-bottom: 15px; text-transform: uppercase; }
+        .separador-equipe { width: 100%; text-align: left; color: #fff; font-size: 1.4rem; font-weight: bold; margin: 30px 0 15px 0; border-bottom: 2px solid #cc0000; padding-bottom: 5px; text-transform: uppercase; }
+        .discord-info { margin-top: 30px; background: #1a1a1a; padding: 30px; border-radius: 8px; border: 1px solid #333; max-width: 600px; margin-left: auto; margin-right: auto; }
+        footer { margin: 60px 0 40px 0; color: #555; font-size: 14px; }
+        .busca-input { width: 100%; max-width: 350px; padding: 10px; margin-bottom: 20px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FUJA DO JASON CLK</h1>
+        <div class="subtitulo">Sobreviva se puder...</div>
+    </header>
+
+    <nav>
+        <button class="tab-btn active" onclick="abrirAba('noticias')">📰 Notícias</button>
+        <button class="tab-btn" onclick="abrirAba('ranking')">🏆 Ranking</button>
+        <button class="tab-btn" onclick="abrirAba('galeria')">🧟 JASONS</button>
+        <button class="tab-btn" onclick="abrirAba('vips')">💎 Seja VIP</button>
+        <button class="tab-btn" onclick="abrirAba('equipe')">🛡️ Equipe</button>
+        <a href="https://www.habblet.city/room/6632536" target="_blank" class="tab-btn btn-quarto">🏰 ENTRAR NO QUARTO</a>
+        <a id="link-discord" href="https://discord.gg/xgX8SUGK7j" target="_blank" class="tab-btn btn-entrar">🎮 DISCORD</a>
+    </nav>
+
+    <div id="noticias" class="aba-conteudo" style="display: block;">
+        <h2>Novidades</h2>
+        <div id="lista-noticias"><p>Carregando...</p></div>
+    </div>
+
+    <div id="ranking" class="aba-conteudo">
+        <h2>🏆 Melhores Jogadores</h2>
+        <div class="ranking-container">
+            <div class="coluna-rank">
+                <h3 class="titulo-vitima">🩸 Top Vítimas</h3>
+                <div id="lista-vitimas" class="grid-players">Carregando...</div>
+            </div>
+            <div class="coluna-rank">
+                <h3 class="titulo-jason">💀 Top Jasons</h3>
+                <div id="lista-jasons" class="grid-players">Carregando...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="galeria" class="aba-conteudo">
+        <h2>Os Jasons do Fuja CLK</h2>
+        <input type="text" id="inputBuscaJason" class="busca-input" placeholder="Procurar nick..." onkeyup="filtrarGaleria()">
+        <div id="jasons-render" class="grid-players"></div>
+    </div>
+
+    <div id="vips" class="aba-conteudo">
+        <h2>💎 Escolha seu Pacote</h2>
+        <p id="vip-selected-msg" style="color: #00ff00; font-weight: bold; height: 20px;"></p>
+        <div id="lista-vips" class="vip-grid"></div>
+        <div class="discord-info">
+            <h3>Como Comprar?</h3>
+            <p>1. Escolha o pacote acima clicando nele.</p>
+            <p>2. Faça o PIX pelo QR Code abaixo.</p>
+            <img src="qrcode.png" alt="QR Code" style="max-width: 200px; border: 3px solid white; margin: 10px 0;">
+            <p>3. Envie o comprovante no Discord:</p>
+            <h3 style="color: #5865F2; margin-top: 10px; font-size: 1.5em;">Creitinmaluco</h3>
+        </div>
+    </div>
+
+    <div id="equipe" class="aba-conteudo">
+        <h2>🛡️ Nossa Equipe</h2>
+        <p style="color: #888; margin-top: -10px; font-size: 0.9em;">Aqueles que fazem o projeto acontecer</p>
+        <div id="equipe-render"></div>
+    </div>
+
+    <footer>
+        Copyright © Fuja do Jason - CLK <br>
+        <b>Desenvolvido por Creitinmaluco</b>
+    </footer>
+
+    <script>
+        const API = "https://ideal-rosanne-fujadojasonclk1-ab7b487e.koyeb.app/api";
+
+        function getVoterKey() {
+            const keyName = 'fujaclk_voter_key_v1';
+            let k = localStorage.getItem(keyName);
+            if (!k) {
+                k = `${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
+                localStorage.setItem(keyName, k);
+            }
+            return k;
+        }
+
+        function markVoted(noticiaId) {
+            try {
+                const key = 'fujaclk_voted_polls_v1';
+                const obj = JSON.parse(localStorage.getItem(key) || '{}');
+                obj[String(noticiaId)] = true;
+                localStorage.setItem(key, JSON.stringify(obj));
+            } catch {}
+        }
+
+        function hasVoted(noticiaId) {
+            try {
+                const obj = JSON.parse(localStorage.getItem('fujaclk_voted_polls_v1') || '{}');
+                return !!obj[String(noticiaId)];
+            } catch { return false; }
+        }
+
+        function calcularTempo(dataPost) {
+            const agora = new Date();
+            const postagem = new Date(dataPost);
+            const diff = agora - postagem;
+            const min = Math.floor(diff / 60000);
+            const h = Math.floor(min / 60);
+            const d = Math.floor(h / 24);
+
+            if (min < 1) return "agora";
+            if (min < 60) return `${min} min`;
+            if (h < 24) return `${h} h`;
+            return `${d} dias`;
+        }
+
+        function safePct(part, total) {
+            if (!total || total <= 0) return 0;
+            return Math.round((part / total) * 100);
+        }
+
+        async function votarEnquete(noticiaId, opcaoIndex) {
+            const voterKey = getVoterKey();
+            const res = await fetch(`${API}/noticias/${noticiaId}/votar`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ opcaoIndex, voterKey })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                markVoted(noticiaId);
+                return { ok: true, enquete: data.enquete };
+            }
+            const err = await res.json().catch(() => ({}));
+            return { ok: false, error: err.error || 'Erro ao votar', status: res.status };
+        }
+
+        function renderEnquete(n) {
+            if (!n.enquete || !Array.isArray(n.enquete.opcoes) || n.enquete.opcoes.length < 2) return "";
+
+            const expira = n.enquete.expiraEm ? new Date(n.enquete.expiraEm) : null;
+            const expirada = expira ? expira.getTime() <= Date.now() : false;
+            const jaVotou = hasVoted(n._id);
+            const modoResultado = expirada || jaVotou;
+
+            if (!modoResultado) {
+                const opcoesHtml = n.enquete.opcoes.map((o, idx) => `
+                    <button class="enquete-opcao" type="button" onclick="onVoteClick('${n._id}', ${idx})">
+                        <b>${o.texto}</b>
+                        <span style="color:#999; font-size:12px;">Votar</span>
+                    </button>
+                `).join('');
+
+                const msg = expira ? `Encerra em ${expira.toLocaleString('pt-BR')}` : `Vote e veja o resultado`;
+
+                return `
+                    <div class="enquete-box" id="poll-${n._id}">
+                        <span class="enquete-titulo">ENQUETE</span>
+                        <div class="enquete-pergunta">${n.enquete.pergunta || 'Enquete'}</div>
+                        ${opcoesHtml}
+                        <div class="enquete-msg">${msg}</div>
+                    </div>
+                `;
+            }
+
+            const total = Number(n.enquete.votosTotais || 0);
+            const opcoesHtml = n.enquete.opcoes.map(o => {
+                const votos = Number(o.votos || 0);
+                const pct = safePct(votos, total);
+                return `
+                    <div style="font-size: 13px; color: #333;">${o.texto}</div>
+                    <div class="barra-bg">
+                        <div class="barra-fill" style="width: ${pct}%"></div>
+                        <span class="barra-votos">${pct}%</span>
+                    </div>
+                `;
+            }).join('');
+
+            const titulo = `RESULTADO (${total} VOTOS)`;
+            const msg = expirada ? `Enquete encerrada` : `Você já votou`;
+
+            return `
+                <div class="enquete-box" id="poll-${n._id}">
+                    <span class="enquete-titulo">${titulo}</span>
+                    <div class="enquete-pergunta">${n.enquete.pergunta || 'Enquete'}</div>
+                    ${opcoesHtml}
+                    <div class="enquete-msg">${msg}${expira ? ` • ${expira.toLocaleString('pt-BR')}` : ''}</div>
+                </div>
+            `;
+        }
+
+        window.onVoteClick = async (noticiaId, opcaoIndex) => {
+            const box = document.getElementById(`poll-${noticiaId}`);
+            if (!box) return;
+            box.querySelectorAll('button.enquete-opcao').forEach(b => b.setAttribute('disabled', 'disabled'));
+
+            const r = await votarEnquete(noticiaId, opcaoIndex);
+            if (!r.ok) {
+                alert(r.error || 'Erro ao votar');
+                box.querySelectorAll('button.enquete-opcao').forEach(b => b.removeAttribute('disabled'));
+                return;
+            }
+
+            const fake = { _id: noticiaId, enquete: r.enquete };
+            box.outerHTML = renderEnquete(fake);
+        };
+
+        function selectVipCard(el, name) {
+            document.querySelectorAll('.vip-card-produto').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('vip-selected-msg').innerText = `Você selecionou o VIP ${name}`;
+        }
+
+        function getVipClass(titulo) {
+            const t = titulo.toLowerCase();
+            if(t.includes('ouro')) return 'vip-ouro';
+            if(t.includes('prata')) return 'vip-prata';
+            if(t.includes('bronze')) return 'vip-bronze';
+            if(t.includes('rubi')) return 'vip-rubi';
+            return '';
+        }
+
+        // Função para retornar o brasão correto da pasta public
+        function getBrasao(titulo) {
+            const t = titulo.toLowerCase();
+            if(t.includes('ouro')) return 'brasao_ouro.png';
+            if(t.includes('prata')) return 'brasao_prata.png';
+            if(t.includes('bronze')) return 'brasao_bronze.png';
+            if(t.includes('rubi')) return 'brasao_rubi.png';
+            return '';
+        }
+
+        function abrirAba(nomeAba) {
+            document.querySelectorAll('.aba-conteudo').forEach(div => div.style.display = 'none');
+            document.querySelectorAll('button.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(nomeAba).style.display = 'block';
+            
+            const btns = document.querySelectorAll('button.tab-btn');
+            btns.forEach(btn => {
+                if(btn.innerText.toLowerCase().includes(nomeAba.toLowerCase()) ||
+                   (nomeAba === 'galeria' && btn.innerText.includes('JASONS'))) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        async function obterAvatar(nick, tipo) {
+            // Cache forte pra parar de "matar" o carregamento com dezenas/centenas de requests
+            window.__avatarUrlCache = window.__avatarUrlCache || new Map();
+            const cacheKey = `${tipo}:${nick}`;
+            if (window.__avatarUrlCache.has(cacheKey)) return window.__avatarUrlCache.get(cacheKey);
+
+            const expressao = tipo === 'jason' ? "&gesture=agr&action=std,crr=1127" : "";
+
+            try {
+                const figKey = `fujaclk_figure_v1:${nick}`;
+                let figure = null;
+                try {
+                    const saved = JSON.parse(localStorage.getItem(figKey) || "null");
+                    if (saved && saved.figure && saved.ts && (Date.now() - saved.ts) < (24 * 60 * 60 * 1000)) {
+                        figure = saved.figure;
+                    }
+                } catch {}
+
+                if (!figure) {
+                    const res = await fetch(`https://api.habblet.city/player/${encodeURIComponent(nick)}`);
+                    const data = await res.json();
+                    figure = data.figure || "";
+                    try { localStorage.setItem(figKey, JSON.stringify({ figure, ts: Date.now() })); } catch {}
+                }
+
+                const url = `https://imaging.habblet.city/avatarimage?figure=${figure}${expressao}&direction=4&head_direction=3&size=m&img_format=png`;
+                window.__avatarUrlCache.set(cacheKey, url);
+                return url;
+            } catch (e) {
+                const url = `https://api.habbonce.com.br/avatar?nick=${encodeURIComponent(nick)}&head_direction=3&direction=2&size=m`;
+                window.__avatarUrlCache.set(cacheKey, url);
+                return url;
+            }
+        }
+
+        function filtrarGaleria() {
+            const termo = document.getElementById('inputBuscaJason').value.toLowerCase();
+            const cards = document.querySelectorAll('#jasons-render .player-card');
+            cards.forEach(card => {
+                const nick = card.querySelector('strong').innerText.toLowerCase();
+                card.style.display = nick.includes(termo) ? "block" : "none";
+            });
+        }
+
+        async function carregarTudo() {
+            try {
+                const [resN, resR, resE, resV, resJ, resC] = await Promise.all([
+                    fetch(`${API}/noticias`), fetch(`${API}/ranking`), fetch(`${API}/equipe`), fetch(`${API}/vip`), fetch(`${API}/galeria`), fetch(`${API}/config/discord_link`)
+                ]);
+
+                const noticiaData = await resN.json();
+                const rankData = await resR.json();
+                const equipeData = await resE.json();
+                const vipData = await resV.json();
+                let jasonData = await resJ.json();
+                const configData = await resC.json();
+
+                if(configData.valor) document.getElementById('link-discord').href = configData.valor;
+
+                const imgCabecaNoticia = "https://imaging.habblet.city/avatarimage?figure=ch-255-1331.lg-281-92.sh-908-92.hr-11571-61.hd-208-1383.ha-10108-1331-92&dance=0&action=std&direction=2&head_direction=2&img_format=png&gesture=std&headonly=1&size=m&effect=&frame_num=0";
+
+                document.getElementById('lista-noticias').innerHTML = noticiaData.map((n, index) => {
+                    const tempoRelativo = calcularTempo(n.data);
+                    const enqueteHtml = renderEnquete(n);
+                    const separador = (index < noticiaData.length - 1) ? '<div class="separador-noticia"></div>' : '';
+
+                    const conteudo = (n.conteudo || "").trim();
+                    const conteudoVazio = !conteudo || conteudo === "<p><br></p>" || conteudo === "<br>";
+                    const tituloHtml = n.titulo ? `<div style="font-weight:800; color:#222; font-size:15px; margin: 0 0 8px 0;">${n.titulo}</div>` : "";
+                    const conteudoHtml = conteudoVazio ? "" : `
+                        <div style="font-size: 15px; line-height: 1.5; margin-bottom: 10px; color: #444;">
+                            ${n.conteudo}
+                        </div>`;
+
+                    return `
+                    <div class="card-noticia">
+                        <div class="noticia-header">
+                            <div class="avatar-cabeca"><img src="${imgCabecaNoticia}"></div>
+                            <div class="noticia-meta">
+                                <strong>FujaCLK</strong> <span>há ${tempoRelativo}</span>
+                            </div>
+                        </div>
+                        ${tituloHtml}
+                        ${conteudoHtml}
+                        ${enqueteHtml}
+                    </div>${separador}`;
+                }).join('') || "Sem notícias.";
+
+                const jasonRankHtml = await Promise.all(rankData.filter(r => r.tipo === 'jason').map(async p => {
+                    const img = await obterAvatar(p.nick, 'jason');
+                    return `<div class="player-card"><img src="${img}"><strong>${p.nick}</strong><span class="caixa-legenda">${p.pontos} Pts</span></div>`;
+                }));
+                document.getElementById('lista-jasons').innerHTML = jasonRankHtml.join('');
+
+                const vitimaRankHtml = await Promise.all(rankData.filter(r => r.tipo !== 'jason').map(async p => {
+                    const img = await obterAvatar(p.nick, 'vitima');
+                    return `<div class="player-card" style="border-color: #3f4f3c;"><img src="${img}"><strong>${p.nick}</strong><span class="caixa-legenda">${p.pontos} Pts</span></div>`;
+                }));
+                document.getElementById('lista-vitimas').innerHTML = vitimaRankHtml.join('');
+
+                jasonData.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+                const galeriaHtml = await Promise.all(jasonData.map(async j => {
+                    const img = await obterAvatar(j.nick, 'jason');
+                    return `<div class="player-card"><img src="${img}"><strong>${j.nick}</strong><span class="caixa-legenda">${j.descricao || 'Jason'}</span></div>`;
+                }));
+                document.getElementById('jasons-render').innerHTML = galeriaHtml.join('') || "Galeria vazia.";
+
+                const grupos = [
+                    {t: "Fundadores", b: ["fundador"]},
+                    {t: "Donos", b: ["dono"]},
+                    {t: "Administração", b: ["adm", "gerente"]},
+                    {t: "Programadores", b: ["dev", "programador"]}
+                ];
+                let htmlEquipe = "";
+                for (const g of grupos) {
+                    const filtrados = equipeData.filter(m => g.b.some(p => m.cargo.toLowerCase().includes(p)));
+                    if (filtrados.length > 0) {
+                        const cards = await Promise.all(filtrados.map(async e => {
+                            const img = await obterAvatar(e.nick, 'equipe');
+                            return `<div class="player-card" style="border-color: #00ccff;"><img src="${img}"><strong>${e.nick}</strong><span class="caixa-legenda" style="background:#333;">${e.cargo}</span></div>`;
+                        }));
+                        htmlEquipe += `<div class="separador-equipe">${g.t}</div><div class="grid-players">${cards.join('')}</div>`;
+                    }
+                }
+                document.getElementById('equipe-render').innerHTML = htmlEquipe || "Sem equipe.";
+
+                // RENDERIZAÇÃO VIP ATUALIZADA COM BRASÕES ORIGINAIS
+                document.getElementById('lista-vips').innerHTML = vipData.map(v => {
+                    const brasaoImg = getBrasao(v.titulo);
+                    return `
+                    <div class="vip-card-produto ${getVipClass(v.titulo)}" onclick="selectVipCard(this, '${v.titulo}')">
+                        <h3>
+                            ${brasaoImg ? `<img src="${brasaoImg}" class="brasao-vip">` : ''}
+                            ${v.titulo}
+                        </h3>
+                        ${v.imagem ? `<img src="${v.imagem}" style="max-width:100%">` : ''}
+                        <p>${v.descricao || ''}</p>
+                        <span class="vip-price">${v.valor}</span>
+                    </div>`;
+                }).join('');
+
+            } catch (e) { console.error("Erro ao sincronizar dados."); }
+        }
+
+        carregarTudo();
+        setInterval(carregarTudo, 30000);
+    </script>
+</body>
+</html>

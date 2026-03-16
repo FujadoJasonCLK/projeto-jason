@@ -1,0 +1,21 @@
+[debug] [2026-01-21T10:01:31.104Z] ----------------------------------------------------------------------
+[debug] [2026-01-21T10:01:31.111Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\PC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-01-21T10:01:31.113Z] CLI Version:   15.3.1
+[debug] [2026-01-21T10:01:31.113Z] Platform:      win32
+[debug] [2026-01-21T10:01:31.114Z] Node Version:  v24.12.0
+[debug] [2026-01-21T10:01:31.114Z] Time:          Wed Jan 21 2026 07:01:31 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2026-01-21T10:01:31.115Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-01-21T10:01:36.075Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-21T10:01:36.076Z] > authorizing via signed-in user (spdmaluco@gmail.com)
+[debug] [2026-01-21T10:01:36.076Z] [iam] checking project fujadojason for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-01-21T10:01:36.079Z] Checked if tokens are valid: true, expires at: 1768992640078
+[debug] [2026-01-21T10:01:36.079Z] Checked if tokens are valid: true, expires at: 1768992640078
+[debug] [2026-01-21T10:01:36.081Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fujadojason:testIamPermissions [none]
+[debug] [2026-01-21T10:01:36.081Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fujadojason:testIamPermissions x-goog-quota-user=projects/fujadojason
+[debug] [2026-01-21T10:01:36.081Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fujadojason:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-01-21T10:01:37.133Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fujadojason:testIamPermissions 200
+[debug] [2026-01-21T10:01:37.133Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fujadojason:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-01-21T10:01:37.135Z] Checked if tokens are valid: true, expires at: 1768992640078
+[debug] [2026-01-21T10:01:37.135Z] Checked if tokens are valid: true, expires at: 1768992640078
+[debug] [2026-01-21T10:01:37.137Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fujadojason [none]
